@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Form.API.Models.Context;
 using Microsoft.OpenApi.Models;
+using Form.API.Repository;
 
 namespace Form.API
 {
@@ -29,7 +30,14 @@ namespace Form.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddTransient<IDepartmentRepository, DepartmentRepository>();
+
+            services.AddControllers().AddNewtonsoftJson();
+
+            services.Configure<MvcNewtonsoftJsonOptions>(opts => {
+                // TODO: fix loop reference
+            });
+
             services.AddDbContext<UserContext>(opts =>
             {
                 opts.UseSqlServer(Configuration["Db:SqlServerConnectionString"]);
