@@ -24,17 +24,11 @@ namespace Form.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]        
         public async Task<IActionResult> GetAllAsync()
         {
             IEnumerable<Department> departments = await _repository.GetAllDepartmentsAsync();
-            if (departments != null)
-            {
-                return Ok(departments);
-            }
-
-            return NotFound();
+            return Ok(departments);
         }
 
         [HttpGet("{id:int}")]
@@ -70,20 +64,14 @@ namespace Form.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status200OK)]        
         public async Task<IActionResult> Post(DepartmentTargetBinding target)
         {
-            if (target != null)
-            {
-                Department department = target.ToDepartment();
+            Department department = target.ToDepartment();
 
-                await _repository.AddDepartmentAsync(department);
+            await _repository.AddDepartmentAsync(department);
 
-                return Ok(department);
-            }
-
-            return NoContent();
+            return Ok(department);
         }
 
         [HttpDelete("{id:int}")]

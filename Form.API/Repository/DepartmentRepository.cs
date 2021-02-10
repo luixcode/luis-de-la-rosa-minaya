@@ -19,24 +19,9 @@ namespace Form.API.Repository
         }
 
         public async Task<IEnumerable<Department>> GetAllDepartmentsAsync()
-        {
-            // Self referencing loop
+        {            
             IEnumerable<Department> departments = await _context.Departments.Include(d => d.Users).ToListAsync();
             
-            if (departments != null)
-            {
-                foreach (Department department in departments)
-                {
-                    if (department.Users != null)
-                    {
-                        foreach (User user in department.Users)
-                        {
-                            user.Department = null;
-                        }
-                    }
-                }
-            }
-
             return departments;
         }
 
@@ -46,15 +31,7 @@ namespace Form.API.Repository
             Department department = await _context.Departments
                 .Include(d => d.Users)
                 .SingleOrDefaultAsync(d => d.Id == departmentId);
-
-            if (department?.Users != null)
-            {
-                foreach (User user in department.Users)
-                {
-                    user.Department = null;
-                }
-            }
-
+            
             return department;
         }
 

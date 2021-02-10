@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using Form.API.Models.Context;
 using Microsoft.OpenApi.Models;
@@ -35,7 +36,8 @@ namespace Form.API
             services.AddControllers().AddNewtonsoftJson();
 
             services.Configure<MvcNewtonsoftJsonOptions>(opts => {
-                // TODO: fix loop reference
+                opts.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                opts.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
             services.AddDbContext<UserContext>(opts =>
