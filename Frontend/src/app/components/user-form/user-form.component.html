@@ -1,1 +1,56 @@
-<p>user-form works!</p>
+<div class="container pt-5 text-center">
+  <form [formGroup]="form">
+    <mat-form-field>
+      <mat-label for="firstName">Nombre</mat-label>
+      <input matInput placeholder="Ex. Luis" formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="lastName">Apellido</mat-label>
+      <input matInput placeholder="Ex. De la Rosa Minaya" formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="gender">Género</mat-label>
+      <mat-select formControlName="gender">
+        <mat-option value="Male">Masculino</mat-option>
+        <mat-option value="Female">Femenino</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="document">Cédula</mat-label>
+      <input matInput placeholder="###-#######-#" mask="000-0000000-0" formControlName="document">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="dob">Fecha nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="dob">
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="position">Posición</mat-label>
+      <input matInput placeholder="Ex. Desarrollador de software" formControlName="position">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="supervisor">Supervisor</mat-label>
+      <input matInput placeholder="Ex. Luis de la Rosa Minaya" formControlName="supervisor">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label for="departamentId">Departamento</mat-label>
+      <mat-select formControlName="departmentId">
+        <mat-option *ngFor="let department of departments" [value]="department.id">
+          {{department.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="onSave()">Guardar usuario</button>
+  </form>
+</div>
