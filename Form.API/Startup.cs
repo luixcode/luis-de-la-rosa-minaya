@@ -21,6 +21,8 @@ namespace Form.API
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -60,6 +62,12 @@ namespace Form.API
                     }
                 });
             });
+
+            services.AddCors(options =>
+            {
+                // Configure in appsettings files.
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins(Configuration["Origins"]));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +89,8 @@ namespace Form.API
             });
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();            
 
