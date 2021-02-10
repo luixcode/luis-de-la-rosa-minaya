@@ -66,7 +66,10 @@ namespace Form.API
             services.AddCors(options =>
             {
                 // Configure in appsettings files.
-                options.AddPolicy(name: MyAllowSpecificOrigins, builder => builder.WithOrigins(Configuration["Origins"]));
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder => {
+                    builder.WithOrigins(Configuration["Origins"]);
+                    builder.AllowAnyHeader();
+                });
             });
         }
 
