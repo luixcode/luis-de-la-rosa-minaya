@@ -26,8 +26,7 @@ namespace Form.API.Repository
         }
 
         public async Task<Department> GetDepartmentByIdAsync(int departmentId)
-        {
-            // Self referencing loop
+        {            
             Department department = await _context.Departments
                 .Include(d => d.Users)
                 .SingleOrDefaultAsync(d => d.Id == departmentId);
